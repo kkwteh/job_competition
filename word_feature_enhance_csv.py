@@ -15,10 +15,21 @@ import re
 
 
 def appearances(word, string):
+    """Counts the number of times the word appears, whole, in the string
+    """
     return len(re.findall(r'\b' + word + r'\b', string))
 
 
 def add_title_feature(train, word):
+    """Adds a feature to a dataframe corresponding to the number of time a given
+    word appears.
+
+    Args:
+    train: the dataframe which will have a feature added to it
+    word: the word to be counted
+    Returns:
+    Nothing -- the dataframe is modified in place
+    """
     evaluated_feature_as_list = [appearances(word, title.lower()) for title
                                                                 in train.Title]
     train["title_has_" + word] = pd.Series(evaluated_feature_as_list,
