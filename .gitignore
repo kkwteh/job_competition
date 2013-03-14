@@ -1,0 +1,6 @@
+*.csv
+
+*.Rproj
+
+/ENV
+.R*
