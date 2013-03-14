@@ -56,8 +56,17 @@ def is_printable(word):
 
 
 train = pd.read_csv("mini_Train_rev1.csv")
+valid = pd.read_csv("Valid_rev1.csv")
 
 def count_words_in_column(df, attr_name):
+    """Counts all of the words appearing in a column of a data frame
+    Args:
+    df: The data frame whose column will be counted
+    attr_name: A string containing the attribute name of the column
+    Returns:
+    A collections.Counter() object containing counts of all words appearing
+    in the column
+    """
 
     attr = operator.attrgetter(attr_name)
     attr_words = Counter()
@@ -71,6 +80,10 @@ def count_words_in_column(df, attr_name):
 title_words = count_words_in_column(train, "Title")
 for word, count in title_words.items():
     add_word_count_feature(train, word, "Title")
+    add_word_count_feature(valid, word, "Title")
 
 with open('enhanced_mini_train.csv','wb') as f:
     train.to_csv(f)
+
+with open('enhanced_valid.csv','wb') as f:
+    valid.to_csv(f)
