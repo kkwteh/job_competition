@@ -6,3 +6,4 @@
 .R*
 *.Rproj.user
 *.pyc
+*.ipynb
