@@ -34,7 +34,9 @@ def add_appearance_count_feature(df, word, attr_name):
     Nothing -- the dataframe is modified in place
     """
     attr = operator.attrgetter(attr_name)
-    evaluated_feature_as_list = [appearances(word, text.lower()) for text
+
+    #need the str cast because NaN may appear in the column
+    evaluated_feature_as_list = [appearances(word, str(text).lower()) for text
                                                                 in attr(df)]
     df[attr_name + "_has_" + word] = pd.Series(evaluated_feature_as_list,
                                                     index=df.index)
@@ -97,10 +99,8 @@ def count_words_in_column(df, attr_name):
     attr = operator.attrgetter(attr_name)
     attr_words = Counter()
     for text in attr(df):
-        f = open("error.log", wb)
-        f.write(text)
-        f.close()
-        for word in wordpunct_tokenize(text):
+        #need the str cast because NaN may appear in the column
+        for word in wordpunct_tokenize(str(text)):
             if (has_punct(word) == False) and (is_printable(word) == True):
                 attr_words[word.lower()] += 1
 
