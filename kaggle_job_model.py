@@ -7,6 +7,10 @@ import sys
 import datetime
 
 def make_model_and_predict(train_file, test_file):
+    """Given name of training csv file, name of test csv file, constructs
+    a random forest model and outputs predictions to a time-stampled csv file
+    """
+
     train = pd.read_csv(train_file)
     valid = pd.read_csv(test_file)
 
