@@ -5,6 +5,8 @@ from sklearn.ensemble import RandomForestRegressor
 import re
 import sys
 import datetime
+from nltk.corpus import stopwords
+
 
 def make_model_and_predict(train_file, test_file):
     """Given name of training csv file, name of test csv file, constructs
@@ -14,10 +16,13 @@ def make_model_and_predict(train_file, test_file):
     train = pd.read_csv(train_file)
     valid = pd.read_csv(test_file)
 
-    number_of_word_features = 10
+    number_of_word_features = 200
     title_words = count_words_in_column(train, "Title")
-    key_count_pairs = title_words.items()
+    key_count_pairs = [(k,v) for (k,v) in title_words.items() if k not in
+                                                stopwords.words('english')]
+
     key_count_pairs.sort(key=lambda (k,v): -v)
+
     for word, count in key_count_pairs[:number_of_word_features]:
         add_appearance_count_feature(train, word, "Title")
         add_appearance_count_feature(valid, word, "Title")
@@ -47,6 +52,7 @@ def make_model_and_predict(train_file, test_file):
 
     with open(prelim_filename,'rb') as f:
         with open(final_filename,'wb') as g:
+            f.readline()           #Throw away the header, don't need it.
             for line in f.xreadlines():
                 g.write(re.sub('^[^,]*,', '', line))
 
