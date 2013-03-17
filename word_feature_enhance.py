@@ -49,7 +49,7 @@ def word_count(text):
     """Returns the number of words in the text, where word is defined as a
     continuous stretch of non-space characters
     """
-    return len(WhitespaceTokenizer().tokenize(text))
+    return len(WhitespaceTokenizer().tokenize(str(text)))
 
 def add_word_count_feature(df, attr_name):
     """Adds a feature to a dataframe corresponding to the number of word for
