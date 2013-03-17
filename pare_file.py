@@ -37,7 +37,7 @@ def split_file(data_file, percent=0.1):
     data_file: name of the file
     percent: approximate percent of file to be written to validation set.
     """
-    train_data_file = "train_part_" + data_file
+    train_data_file =  "train_part_" + data_file
     validation_data_file = "validation_part_" + data_file
     with open(data_file, 'rb') as f:
         with open(train_data_file, 'wb') as g:
@@ -46,7 +46,7 @@ def split_file(data_file, percent=0.1):
                 g.write(line)
                 h.write(line)
                 for line in f.xreadlines():
-                    if random.random() < percent:
+                    if random.random() > percent:
                         g.write(line)
                     else:
                         h.write(line)
