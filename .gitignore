@@ -3,6 +3,7 @@
 *.Rproj
 
 /ENV
+/log
 .R*
 *.Rproj.user
 *.pyc
